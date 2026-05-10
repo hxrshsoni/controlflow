@@ -514,17 +514,27 @@ export default function App() {
   }, [isRunning, speed, advance]);
 
   // Flash changed variables
-  useEffect(() => {
-    if (stepIndex < 0) return;
-    const changed = program.steps[stepIndex]?.changed;
-    if (changed?.length) {
-      const fk = {};
-      changed.forEach(k => (fk[k] = true));
-      setFlashKeys(fk);
-      const t = setTimeout(() => setFlashKeys({}), 700);
-      return () => clearTimeout(t);
-    }
-  }, [stepIndex, programKey]);
+useEffect(() => {
+  if (stepIndex < 0) return;
+
+  const changed = program.steps[stepIndex]?.changed;
+
+  if (changed?.length) {
+    const fk = {};
+
+    changed.forEach((k) => {
+      fk[k] = true;
+    });
+
+    setFlashKeys(fk);
+
+    const t = setTimeout(() => {
+      setFlashKeys({});
+    }, 700);
+
+    return () => clearTimeout(t);
+  }
+}, [stepIndex, programKey, program.steps?.[stepIndex]]);
 
   // Auto-scroll trace to bottom
   useEffect(() => {

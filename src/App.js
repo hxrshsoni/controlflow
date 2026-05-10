@@ -534,7 +534,7 @@ useEffect(() => {
 
     return () => clearTimeout(t);
   }
-}, [stepIndex, programKey, program.steps?.[stepIndex]]);
+}, [stepIndex, programKey, program.steps]);
 
   // Auto-scroll trace to bottom
   useEffect(() => {
